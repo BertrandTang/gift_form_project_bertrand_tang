@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Gift;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class GiftController extends Controller
 {
@@ -13,6 +14,7 @@ class GiftController extends Controller
     public function index()
     {
         $gifts = Gift::all();
+
         return view('welcome', ['gifts' => $gifts]);
     }
 
@@ -35,7 +37,11 @@ class GiftController extends Controller
             'details' => 'nullable|string',
             'price' => 'required|decimal:0,2',
         ]);
-        Gift::create($validated);
+        $gift = Gift::create($validated);
+            Mail::raw('Le cadeau ' . $gift->name . ' a bien été ajouté (' . $gift->price . '€)', function ($message) {
+                $message->to('test@example.com')
+                    ->subject('Cadeau bien crée');
+            });
         return redirect()->route('home');
     }
 
@@ -69,6 +75,7 @@ class GiftController extends Controller
             'price' => 'required|decimal:0,2',
         ]);
         $gift->update($validated);
+
         return redirect()->route('home');
     }
 
@@ -78,6 +85,7 @@ class GiftController extends Controller
     public function destroy(Gift $gift)
     {
         $gift->delete();
+
         return redirect()->route('home')->with('success', 'Cadeau supprimé avec succès.');
     }
 }
