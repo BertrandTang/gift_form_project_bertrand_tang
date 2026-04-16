@@ -20,6 +20,9 @@
         @endif
     </head>
         <div class="w-full max-w-4xl mx-auto mb-8">
+            <div class="mb-4 flex justify-end">
+                <a href="{{ route('gifts.create') }}" class="bg-green-200 hover:bg-green-300 text-black font-semibold py-2 px-4 rounded border border-green-700">Créer un cadeau</a>
+            </div>
             <h2 class="text-xl font-semibold mb-4">Liste des cadeaux</h2>
             <table class="w-full border border-gray-300 bg-white rounded-md mb-6">
                 <thead>
