@@ -44,7 +44,7 @@ class GiftController extends Controller
      */
     public function show(Gift $gift)
     {
-        return inertia('giftshow', [
+        return view('gifts.show', [
             'gift' => $gift,
         ]);
     }
@@ -77,6 +77,7 @@ class GiftController extends Controller
      */
     public function destroy(Gift $gift)
     {
-        //
+        $gift->delete();
+        return redirect()->route('home')->with('success', 'Cadeau supprimé avec succès.');
     }
 }
