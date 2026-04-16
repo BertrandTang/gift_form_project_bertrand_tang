@@ -13,7 +13,7 @@ class GiftCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $gift;
+    protected $gift;
 
     /**
      * Create a new message instance.
