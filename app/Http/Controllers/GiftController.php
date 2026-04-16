@@ -39,7 +39,7 @@ class GiftController extends Controller
         ]);
         $gift = Gift::create($validated);
             Mail::raw('Le cadeau ' . $gift->name . ' a bien été ajouté (' . $gift->price . '€)', function ($message) {
-                $message->to('giftadmin@sandboxd548060d8a6a4b8bad7445f4f3d527d6.mailgun.org')
+                $message->to('bertrand.tand.dev@gmail.com')
                     ->subject('Cadeau bien crée');
             });
         return redirect()->route('home');
