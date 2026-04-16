@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\GiftCreated;
 
 class GiftController extends Controller
 {
@@ -38,10 +39,9 @@ class GiftController extends Controller
             'price' => 'required|decimal:0,2',
         ]);
         $gift = Gift::create($validated);
-            Mail::raw('Le cadeau ' . $gift->name . ' a bien été ajouté (' . $gift->price . '€)', function ($message) {
-                $message->to('bertrand.tand.dev@gmail.com')
-                    ->subject('Cadeau bien crée');
-            });
+        Mail::to('example@gmail.com')
+            ->send(new GiftCreated($gift));
+
         return redirect()->route('home');
     }
 

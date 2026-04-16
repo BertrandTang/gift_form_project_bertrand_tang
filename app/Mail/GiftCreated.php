@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
@@ -14,12 +13,14 @@ class GiftCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $gift;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($gift)
     {
-        //
+        $this->gift = $gift;
     }
 
     /**
@@ -38,11 +39,11 @@ class GiftCreated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mail.gift_created',
             with: [
-                    'name' => $this->gift->name,
-                    'price' => $this->gift->price,
-                    ],
+                'name' => $this->gift->name,
+                'price' => $this->gift->price,
+            ],
         );
     }
 
@@ -53,6 +54,10 @@ class GiftCreated extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            Attachment::fromPath(public_path('gift.jpg'))
+                ->as('gift.jpg')
+                ->withMime('image/jpeg'),
+        ];
     }
 }
