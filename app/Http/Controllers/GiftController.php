@@ -12,9 +12,8 @@ class GiftController extends Controller
      */
     public function index()
     {
-        return inertia('giftlist', [
-            'gifts' => Gift::all(),
-        ]);
+        $gifts = Gift::all();
+        return view('welcome', ['gifts' => $gifts]);
     }
 
     /**

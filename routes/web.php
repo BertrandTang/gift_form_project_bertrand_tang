@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GiftController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('gifts', GiftController::class);
+Route::get('/', [GiftController::class, 'index'])->name('home');
